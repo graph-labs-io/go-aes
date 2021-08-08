@@ -8,15 +8,14 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
-	"os"
 
 	"github.com/mergermarket/go-pkcs7"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func AesEnryptionHelper(plaintext string) (ciphertext string, err error) {
-	byteKey, decodeErr := hex.DecodeString(os.Getenv("AES_KEY"))
+func AesEnryptionHelper(plaintext string, hexKey string) (ciphertext string, err error) {
+	byteKey, decodeErr := hex.DecodeString(hexKey)
 	if decodeErr != nil {
 		return "", decodeErr
 	}
@@ -29,8 +28,8 @@ func AesEnryptionHelper(plaintext string) (ciphertext string, err error) {
 	return aesEncryptedString, nil
 }
 
-func AesDecryptionHelper(ciphertext string) (plaintext string, err error) {
-	byteKey, decodeErr := hex.DecodeString(os.Getenv("AES_KEY"))
+func AesDecryptionHelper(ciphertext string, hexKey string) (plaintext string, err error) {
+	byteKey, decodeErr := hex.DecodeString(hexKey)
 	if decodeErr != nil {
 		return "", decodeErr
 	}
